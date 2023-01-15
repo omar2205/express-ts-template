@@ -4,6 +4,7 @@ import cors from 'cors'
 import morgan from 'morgan'
 import rfs from 'rotating-file-stream'
 import path, { dirname } from 'path'
+import bodyParser from 'body-parser'
 
 import { fileURLToPath } from 'url'
 
@@ -25,12 +26,9 @@ const logger = morgan('combined', { stream: accessLogStream })
 app.use(helmet())
 app.use(cors())
 app.use(logger)
+app.use(bodyParser.json())
 
 app.use('/api/v1', v1_router)
-
-app.get('/', (req, res) => {
-  res.send()
-})
 
 app.listen(PORT, () => {
   console.log('⚡ Server online - port:', PORT)
